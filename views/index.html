@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" href="/css/styles.css">
+    <title>BitCoin Rates</title>
+
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous">
+    </script>
+    <script type="text/javascript">
+    $(function(){
+      $('#enter').click(function(){  
+        var selectcountry =  $('#selectcountry');
+        console.log("selectcountry",selectcountry);
+        $.post('/', $('.form-control').serialize(),function(data){
+          console.log("data",data);
+          $('#name').html(data.name);
+          $('#topleveldomain').html(data.topLevelDomain);
+          $('#callingcode').html(data.callingCodes);
+          $('#capital').html(data.capital);
+          $('#region').html(data.region);
+          $('#subregion').html(data.subregion);
+          $('#population').html(data.population);
+          $('#timezone').html(data.timezones);
+          $('#language').html(data.name);
+          $('#currencycode').html(data.currencies);
+          $('#flagurl').html('<a href="'+data.flag+'"><img src="'+data.flag+'" alt="'+data.name+' flag" width="500"></a>');
+        });
+      }); 
+    });
+  </script>
+</head>
+<body>
+    <div id="wrap" class="input">
+      <header class="input-header">
+        <h1>Country info APP</h1>
+      </header>
+      <section class="input-content">
+              <!--<div class="select-box">-->
+              <form action="/" method="POST" class="form-control">
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Choose Country</dt>
+                  <dd class="inputbox-content">
+                    <select id="selectcountry" name="selectcountry">
+                      <script type="text/javascript">
+                          let allCountriesUrl = `https://restcountries.eu/rest/v2/all`;
+                          var request = new XMLHttpRequest()
+                          request.open('GET', allCountriesUrl, false)
+                          request.onload = function() {
+                            // Begin accessing JSON data here
+                            var data = JSON.parse(request.response);
+                            //console.log("data",data);
+                            if (request.status >= 200 && request.status < 400) {
+                              for (i in data) {
+                                document.write('<option value="' + data[i].name +'">' + data[i].name + '</option>');
+                              }
+                            } else {
+                              const errorMessage = document.createElement('marquee')
+                              errorMessage.textContent = `Gah, it's not working!`
+                              app.appendChild(errorMessage)
+                            }
+                          }
+                          request.send();
+                      </script>
+                    </select>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <button id="enter" type="button">Show Country Data</button>
+              </form>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Name</dt>
+                  <dd class="inputbox-content">
+                    <div id="name"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Top Level Domain</dt>
+                  <dd class="inputbox-content">
+                    <div id="topleveldomain"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Calling Code</dt>
+                  <dd class="inputbox-content">
+                    <div id="callingcode"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Capital</dt>
+                  <dd class="inputbox-content">
+                    <div id="capital"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Region</dt>
+                  <dd class="inputbox-content">
+                    <div id="region"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Subregion</dt>
+                  <dd class="inputbox-content">
+                    <div id="subregion"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Population</dt>
+                  <dd class="inputbox-content">
+                    <div id="population"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Timezone</dt>
+                  <dd class="inputbox-content">
+                    <div id="timezone"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Language</dt>
+                  <dd class="inputbox-content">
+                    <div id="language"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Currency code, name and symbol</dt>
+                  <dd class="inputbox-content">
+                    <div id="currencycode"></div>
+                  </dd>
+                </dl>
+              </div>
+              <br>
+              <div class="input-content-wrap">
+                <dl class="inputbox">
+                  <dt class="inputbox-title">Flag URL</dt>
+                  <dd class="inputbox-content">
+                    <div id="flagurl"></div>
+                  </dd>
+                </dl>
+              </div>
+          </div>
+      </section>
+      </div>
+</body>
+</html>
